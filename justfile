@@ -43,4 +43,4 @@ examples:
     done
 
 ci:
-    act --var-file .env
+    act --secret-file .env

@@ -13,6 +13,9 @@ jobs:
       matrix:
         ruby:
           - "3.3"
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
 
     steps:
       - uses: actions/checkout@v4

@@ -1,5 +1,7 @@
 # rager_ruby
 
+[![test](https://github.com/mvkvc/rager_ruby/actions/workflows/test.yaml/badge.svg)](https://github.com/mvkvc/rager_ruby/actions/workflows/test.yaml)
+
 Build continuously improving AI applications.
 
 ## Installation
