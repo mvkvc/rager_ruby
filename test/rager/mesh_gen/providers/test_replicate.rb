@@ -24,13 +24,13 @@ class TestMeshGenReplicateProvider < Minitest::Test
     Async do
       r = @ctx.image_gen("An ornate golden chalice.", provider: "replicate")
 
-      assert_instance_of Rager::Result, r
+      assert_instance_of Rager::Operation, r
       assert_instance_of String, r.out
       assert_match %r{^https?://}, r.out
 
       r = @ctx.mesh_gen(r.out, provider: "replicate")
 
-      assert_instance_of Rager::Result, r
+      assert_instance_of Rager::Operation, r
       assert_instance_of String, r.out
       assert_match %r{^https?://}, r.out
     end

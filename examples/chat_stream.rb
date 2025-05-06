@@ -11,29 +11,28 @@ puts TEXT_PROMPT
 ctx = Rager::Context.new
 
 Async do
-  p = "Repeat this like a pirate: #{TEXT_PROMPT}"
+  prompt = "Repeat this like a pirate: #{TEXT_PROMPT}"
   puts "\nAsking:"
-  puts p
+  puts prompt
 
-  r = ctx.chat(p, stream: true)
+  op = ctx.chat(prompt, stream: true)
 
   puts "\nRaw stream output:"
-  r.out.each { |d| puts d.content }
-
-  o = r.mat.first
+  op.out.each { |d| puts d.content }
+  output = op.mat.first
   puts "\nOutput:"
-  puts o
+  puts output
 
-  p = "Respond to this like a rival pirate: #{o}"
+  prompt = "Respond to this like a rival pirate: #{output}"
   puts "\nAsking:"
-  puts p
+  puts prompt
 
-  r = ctx.chat(p, stream: true)
+  op = ctx.chat(prompt, stream: true)
 
   puts "\nRaw stream output:"
-  r.out.each { |d| puts d.content }
+  op.out.each { |d| puts d.content }
 
-  o = r.mat.first
+  output = op.mat.first
   puts "\nOutput:"
-  puts o
+  puts output
 end

@@ -24,7 +24,7 @@ module Rager
       when "replicate"
         Rager::MeshGen::Providers::Replicate.new
       else
-        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::MeshGen, key)
+        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::Kind::MeshGen, key)
       end
     end
   end

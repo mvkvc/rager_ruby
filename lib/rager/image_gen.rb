@@ -24,7 +24,7 @@ module Rager
       when "replicate"
         Rager::ImageGen::Providers::Replicate.new
       else
-        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::ImageGen, key)
+        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::Kind::ImageGen, key)
       end
     end
   end

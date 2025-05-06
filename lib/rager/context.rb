@@ -8,20 +8,16 @@ module Rager
   class Context
     extend T::Sig
 
-    sig {
-      params(
-        id: T.nilable(String)
-      ).void
-    }
-    def initialize(id: nil)
-      @id = T.let(id || SecureRandom.uuid, String)
+    sig { void }
+    def initialize
+      @id = T.let(SecureRandom.uuid, String)
     end
 
     sig do
       params(
         messages: T.any(String, T::Array[Rager::Chat::Message]),
         kwargs: T.untyped
-      ).returns(Rager::Result)
+      ).returns(Rager::Operation)
     end
     def chat(messages, **kwargs)
       if messages.is_a?(String)
@@ -34,7 +30,7 @@ module Rager
       end
 
       execute(
-        Rager::Operation::Chat,
+        Rager::Operation::Kind::Chat,
         Rager::Chat::Options,
         kwargs,
         messages
@@ -45,11 +41,11 @@ module Rager
       params(
         prompt: String,
         kwargs: T.untyped
-      ).returns(Rager::Result)
+      ).returns(Rager::Operation)
     end
     def image_gen(prompt, **kwargs)
       execute(
-        Rager::Operation::ImageGen,
+        Rager::Operation::Kind::ImageGen,
         Rager::ImageGen::Options,
         kwargs,
         prompt
@@ -60,11 +56,11 @@ module Rager
       params(
         prompt: String,
         kwargs: T.untyped
-      ).returns(Rager::Result)
+      ).returns(Rager::Operation)
     end
     def mesh_gen(prompt, **kwargs)
       execute(
-        Rager::Operation::MeshGen,
+        Rager::Operation::Kind::MeshGen,
         Rager::MeshGen::Options,
         kwargs,
         prompt
@@ -75,23 +71,23 @@ module Rager
 
     sig do
       params(
-        operation: Rager::Operation,
+        kind: Rager::Operation::Kind,
         options_struct: T::Class[Rager::Options],
         kwargs: T.untyped,
         input: T.any(String, T::Array[Rager::Chat::Message]),
         block: T.proc.params(options: T.untyped).returns(T.untyped)
-      ).returns(Rager::Result)
+      ).returns(Rager::Operation)
     end
-    def execute(operation, options_struct, kwargs, input, &block)
+    def execute(kind, options_struct, kwargs, input, &block)
       options = options_struct.new(**kwargs)
       options.validate
       start_time = Time.now
 
       value = yield(options)
 
-      Result.new(
+      Operation.new(
         context_id: @id,
-        operation: operation,
+        kind: kind,
         input: input,
         options: options,
         start_time: start_time.to_i,

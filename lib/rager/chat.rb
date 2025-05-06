@@ -28,7 +28,7 @@ module Rager
       when "openai"
         Rager::Chat::Providers::Openai.new
       else
-        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::Chat, key)
+        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::Kind::Chat, key)
       end
     end
   end

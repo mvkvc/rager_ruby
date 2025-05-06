@@ -28,16 +28,16 @@ puts JSON.pretty_generate(json_schema)
 ctx = Rager::Context.new
 
 Async do
-  p = "Give me information about #{TEXT_PROMPT}"
+  prompt = "Give me information about #{TEXT_PROMPT}"
   puts "\nAsking:"
-  puts p
+  puts prompt
 
-  r = ctx.chat(p, schema: country_schema, schema_name: "country")
+  op = ctx.chat(prompt, schema: country_schema, schema_name: "country")
 
-  o = JSON.parse(r.mat.first)
+  json = JSON.parse(op.mat.first)
   puts "\nStructured output:"
-  puts o
+  puts json
 
   puts "\nValidation:"
-  puts country_schema.call(o).to_h
+  puts country_schema.call(json).to_h
 end

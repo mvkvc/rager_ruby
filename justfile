@@ -32,8 +32,8 @@ fix:
     -bundle exec standardrb -a
     -bundle exec srb tc -a
 
-example name *args:
-    bundle exec ruby examples/{{name}}.rb "{{args}}"
+run file *args:
+    bundle exec ruby {{file}} {{args}}
 
 examples:
     #!/usr/bin/env bash
