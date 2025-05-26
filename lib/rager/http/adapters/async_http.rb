@@ -1,7 +1,6 @@
 # typed: strict
 # frozen_string_literal: true
 
-require "async/http"
 require "sorbet-runtime"
 
 module Rager
@@ -12,6 +11,8 @@ module Rager
 
         sig { void }
         def initialize
+          require "async/http"
+
           @internet = T.let(Async::HTTP::Internet.new, Async::HTTP::Internet)
         end
 

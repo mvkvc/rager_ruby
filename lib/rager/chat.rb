@@ -11,7 +11,7 @@ module Rager
       params(
         messages: T::Array[Rager::Chat::Message],
         options: Rager::Chat::Options
-      ).returns(Rager::Types::ChatValue)
+      ).returns(Rager::Types::ChatOutput)
     end
     def self.chat(messages, options = Rager::Chat::Options.new)
       provider = get_provider(options.provider)
@@ -28,7 +28,7 @@ module Rager
       when "openai"
         Rager::Chat::Providers::Openai.new
       else
-        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::Kind::Chat, key)
+        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::Chat, key)
       end
     end
   end

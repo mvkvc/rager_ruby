@@ -10,7 +10,7 @@ module Rager
       class Replicate < Rager::MeshGen::Providers::Abstract
         extend T::Sig
 
-        sig { override.params(image_url: String, options: Rager::MeshGen::Options).returns(Rager::Types::MeshGenValue) }
+        sig { override.params(image_url: String, options: Rager::MeshGen::Options).returns(Rager::Types::MeshGenOutput) }
         def mesh_gen(image_url, options)
           api_key = options.api_key || ENV["REPLICATE_API_KEY"]
           raise Rager::Errors::MissingCredentialsError.new("Replicate", "REPLICATE_API_KEY") if api_key.nil?

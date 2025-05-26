@@ -15,7 +15,7 @@ module Rager
           abstract.params(
             image_url: String,
             options: Rager::MeshGen::Options
-          ).returns(Rager::Types::MeshGenValue)
+          ).returns(Rager::Types::MeshGenOutput)
         end
         def mesh_gen(image_url, options)
         end

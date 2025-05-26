@@ -16,8 +16,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.required_ruby_version = ">= 3.1"
 
-  spec.add_dependency "async-http", "~> 0.88.0"
-  spec.add_dependency "base64", "~> 0.2.0"
   spec.add_dependency "dry-schema", "~> 1.14"
   spec.add_dependency "sorbet-runtime", "~> 0.5.12028"
   spec.add_dependency "zeitwerk", "~> 2.7"

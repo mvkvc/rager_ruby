@@ -15,7 +15,7 @@ module Rager
           abstract.params(
             messages: T::Array[Rager::Chat::Message],
             options: Rager::Chat::Options
-          ).returns(Rager::Types::ChatValue)
+          ).returns(Rager::Types::ChatOutput)
         end
         def chat(messages, options)
         end

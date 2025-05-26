@@ -8,16 +8,23 @@ module Rager
   class Context
     extend T::Sig
 
-    sig { void }
-    def initialize
-      @id = T.let(SecureRandom.uuid, String)
+    sig { returns(String) }
+    attr_reader :id
+
+    sig { returns(T.nilable(String)) }
+    attr_reader :hash
+
+    sig { params(id: T.nilable(String)).void }
+    def initialize(id: nil)
+      @id = T.let(id || SecureRandom.uuid, String)
+      @hash = T.let(lookup_git_hash, T.nilable(String))
     end
 
     sig do
       params(
         messages: T.any(String, T::Array[Rager::Chat::Message]),
         kwargs: T.untyped
-      ).returns(Rager::Operation)
+      ).returns(Rager::Result)
     end
     def chat(messages, **kwargs)
       if messages.is_a?(String)
@@ -30,7 +37,7 @@ module Rager
       end
 
       execute(
-        Rager::Operation::Kind::Chat,
+        Rager::Operation::Chat,
         Rager::Chat::Options,
         kwargs,
         messages
@@ -41,11 +48,11 @@ module Rager
       params(
         prompt: String,
         kwargs: T.untyped
-      ).returns(Rager::Operation)
+      ).returns(Rager::Result)
     end
     def image_gen(prompt, **kwargs)
       execute(
-        Rager::Operation::Kind::ImageGen,
+        Rager::Operation::ImageGen,
         Rager::ImageGen::Options,
         kwargs,
         prompt
@@ -56,11 +63,11 @@ module Rager
       params(
         prompt: String,
         kwargs: T.untyped
-      ).returns(Rager::Operation)
+      ).returns(Rager::Result)
     end
     def mesh_gen(prompt, **kwargs)
       execute(
-        Rager::Operation::Kind::MeshGen,
+        Rager::Operation::MeshGen,
         Rager::MeshGen::Options,
         kwargs,
         prompt
@@ -71,29 +78,39 @@ module Rager
 
     sig do
       params(
-        kind: Rager::Operation::Kind,
+        operation: Rager::Operation,
         options_struct: T::Class[Rager::Options],
         kwargs: T.untyped,
         input: T.any(String, T::Array[Rager::Chat::Message]),
         block: T.proc.params(options: T.untyped).returns(T.untyped)
-      ).returns(Rager::Operation)
+      ).returns(Rager::Result)
     end
-    def execute(kind, options_struct, kwargs, input, &block)
+    def execute(operation, options_struct, kwargs, input, &block)
       options = options_struct.new(**kwargs)
       options.validate
+
       start_time = Time.now
 
-      value = yield(options)
+      output = yield(options)
 
-      Operation.new(
+      Result.new(
         context_id: @id,
-        kind: kind,
+        hash: @hash,
+        operation: operation,
         input: input,
         options: options,
         start_time: start_time.to_i,
         end_time: Time.now.to_i,
-        value: value
+        output: output
       ).tap { |r| r.log }
+    end
+
+    private
+
+    sig { returns(T.nilable(String)) }
+    def lookup_git_hash
+      result = `git rev-parse HEAD`
+      $?.success? ? result.strip : nil
     end
   end
 end

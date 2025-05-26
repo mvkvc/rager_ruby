@@ -25,7 +25,7 @@ class TestChatOpenaiProvider < Minitest::Test
     Async do
       r = @ctx.chat("Tell me a joke.", provider: "openai")
 
-      assert_instance_of Rager::Operation, r
+      assert_instance_of Rager::Result, r
       assert_instance_of Array, r.out
       assert_equal 1, r.out.length
     end
@@ -35,10 +35,8 @@ class TestChatOpenaiProvider < Minitest::Test
     Async do
       r = @ctx.chat("Tell me a joke.", provider: "openai", stream: true)
 
-      assert_instance_of Rager::Operation, r
+      assert_instance_of Rager::Result, r
       assert_instance_of Enumerator, r.out
-
-      r.out.each {}
 
       assert_instance_of Array, r.mat
       assert_equal 1, r.mat.length
@@ -49,7 +47,7 @@ class TestChatOpenaiProvider < Minitest::Test
     Async do
       r = @ctx.chat("Tell me a joke.", provider: "openai", n: 2)
 
-      assert_instance_of Rager::Operation, r
+      assert_instance_of Rager::Result, r
       assert_instance_of Array, r.out
       assert_equal 2, r.out.length
     end
@@ -59,10 +57,8 @@ class TestChatOpenaiProvider < Minitest::Test
     Async do
       r = @ctx.chat("Tell me a joke.", provider: "openai", stream: true, n: 2)
 
-      assert_instance_of Rager::Operation, r
+      assert_instance_of Rager::Result, r
       assert_instance_of Enumerator, r.out
-
-      r.out.each {}
 
       assert_instance_of Array, r.mat
       assert_equal 2, r.mat.length
@@ -80,7 +76,7 @@ class TestChatOpenaiProvider < Minitest::Test
     Async do
       r = @ctx.chat(prompt, schema: simple_schema, schema_name: "character", provider: "openai")
 
-      assert_instance_of Rager::Operation, r
+      assert_instance_of Rager::Result, r
       assert_instance_of Array, r.out
       assert_equal 1, r.out.length
 
@@ -109,7 +105,7 @@ class TestChatOpenaiProvider < Minitest::Test
     Async do
       r = @ctx.chat(prompt, schema: nested_schema, schema_name: "book_details", provider: "openai")
 
-      assert_instance_of Rager::Operation, r
+      assert_instance_of Rager::Result, r
       assert_instance_of Array, r.out
       assert_equal 1, r.out.length
 
@@ -140,7 +136,7 @@ class TestChatOpenaiProvider < Minitest::Test
     Async do
       r = @ctx.chat(prompt, schema: complex_schema, schema_name: "project_tasks", provider: "openai")
 
-      assert_instance_of Rager::Operation, r
+      assert_instance_of Rager::Result, r
       assert_instance_of Array, r.out
       assert_equal 1, r.out.length
 

@@ -10,7 +10,7 @@ module Rager
       class Replicate < Rager::ImageGen::Providers::Abstract
         extend T::Sig
 
-        sig { override.params(prompt: String, options: Rager::ImageGen::Options).returns(Rager::Types::ImageGenValue) }
+        sig { override.params(prompt: String, options: Rager::ImageGen::Options).returns(Rager::Types::ImageGenOutput) }
         def image_gen(prompt, options)
           url = "https://api.replicate.com/v1/models/#{options.model}/predictions"
           api_key = options.api_key || ENV["REPLICATE_API_KEY"]

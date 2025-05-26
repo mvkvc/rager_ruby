@@ -121,13 +121,16 @@ module Rager
 
         sig { void }
         def save_cache
-          current_file_content = if File.exist?(@test_file_path)
-            JSON.parse(File.read(@test_file_path, encoding: "UTF-8"))
-          else
-            {}
-          end
+          current_file_content =
+            if File.exist?(@test_file_path)
+              JSON.parse(File.read(@test_file_path, encoding: "UTF-8"))
+            else
+              {}
+            end
+
           output = current_file_content.merge(@cache)
-          File.write(@test_file_path, output.to_json, encoding: "UTF-8")
+          json_string = JSON.generate(output).force_encoding("UTF-8")
+          File.write(@test_file_path, json_string, encoding: "UTF-8")
         end
       end
     end

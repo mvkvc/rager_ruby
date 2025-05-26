@@ -1,23 +1,21 @@
-# rager_ruby
+# rager_rb
 
-[![test](https://github.com/mvkvc/rager_ruby/actions/workflows/test.yaml/badge.svg)](https://github.com/mvkvc/rager_ruby/actions/workflows/test.yaml)
+[![test](https://github.com/mvkvc/rager_rb/actions/workflows/test.yaml/badge.svg)](https://github.com/mvkvc/rager_rb/actions/workflows/test.yaml)
 
 Build continuously improving AI applications.
 
 ## Installation
 
-If you are using Bundler run the following command:
+If you are using Bundler:
 
 ```bash
-bundle add rager \
-    --git 'https://github.com/mvkvc/rager_ruby.git'  \
-    --branch 'main'
+bundle add rager
 ```
 
-Otherwise you can add it to your Gemfile directly with:
+Otherwise you can add it to your Gemfile directly:
 
 ```Ruby
-gem 'rager', git: 'https://github.com/mvkvc/rager_ruby.git', branch: 'main'
+gem "rager", "~> 0.1.0"
 ```
 
 ## License

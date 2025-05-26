@@ -16,21 +16,30 @@ module Rager
       )
     }
 
-    ChatValue = T.type_alias { T.any(T::Array[String], T::Enumerator[Rager::Chat::MessageDelta]) }
-    ImageGenValue = T.type_alias { String }
-    MeshGenValue = T.type_alias { String }
-    Value = T.type_alias {
-      T.any(
-        ChatValue,
-        ImageGenValue,
-        MeshGenValue
-      )
-    }
-
     ChatStream = T.type_alias { T::Enumerator[Rager::Chat::MessageDelta] }
     Stream = T.type_alias { ChatStream }
 
     ChatBuffer = T.type_alias { T::Array[Rager::Chat::MessageDelta] }
     Buffer = T.type_alias { ChatBuffer }
+
+    ChatOutput = T.type_alias { T.any(T::Array[String], ChatStream) }
+    ImageGenOutput = T.type_alias { String }
+    MeshGenOutput = T.type_alias { String }
+    Output = T.type_alias {
+      T.any(
+        ChatOutput,
+        ImageGenOutput,
+        MeshGenOutput
+      )
+    }
+
+    ChatNonStreamOutput = T.type_alias { T::Array[String] }
+    NonStreamOutput = T.type_alias {
+      T.any(
+        ChatNonStreamOutput,
+        ImageGenOutput,
+        MeshGenOutput
+      )
+    }
   end
 end

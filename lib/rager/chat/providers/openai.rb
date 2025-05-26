@@ -16,7 +16,7 @@ module Rager
           override.params(
             messages: T::Array[Rager::Chat::Message],
             options: Rager::Chat::Options
-          ).returns(Rager::Types::ChatValue)
+          ).returns(Rager::Types::ChatOutput)
         end
         def chat(messages, options)
           api_key = options.api_key || ENV["OPENAI_API_KEY"]

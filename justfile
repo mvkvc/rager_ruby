@@ -37,10 +37,12 @@ run file *args:
 
 examples:
     #!/usr/bin/env bash
+
     set -euxo pipefail
+
     for f in ./examples/*.rb; do
         bundle exec ruby "$f"
     done
 
 ci:
-    act --secret-file .env
+    act -W ./.github/workflows/test.yaml --secret-file .env

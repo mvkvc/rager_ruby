@@ -24,7 +24,7 @@ class TestImageGenReplicateProvider < Minitest::Test
     Async do
       r = @ctx.image_gen("A beautiful sunset over a calm ocean.", provider: "replicate")
 
-      assert_instance_of Rager::Operation, r
+      assert_instance_of Rager::Result, r
       assert_instance_of String, r.out
       assert_match %r{^https?://}, r.out
     end

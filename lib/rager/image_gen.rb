@@ -11,7 +11,7 @@ module Rager
       params(
         prompt: String,
         options: Rager::ImageGen::Options
-      ).returns(Rager::Types::ImageGenValue)
+      ).returns(Rager::Types::ImageGenOutput)
     end
     def self.image_gen(prompt, options = Rager::ImageGen::Options.new)
       provider = get_provider(options.provider)
@@ -24,7 +24,7 @@ module Rager
       when "replicate"
         Rager::ImageGen::Providers::Replicate.new
       else
-        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::Kind::ImageGen, key)
+        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::ImageGen, key)
       end
     end
   end

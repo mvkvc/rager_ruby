@@ -11,7 +11,7 @@ module Rager
       params(
         image_url: String,
         options: Rager::MeshGen::Options
-      ).returns(Rager::Types::MeshGenValue)
+      ).returns(Rager::Types::MeshGenOutput)
     end
     def self.mesh_gen(image_url, options = Rager::MeshGen::Options.new)
       provider = get_provider(options.provider)
@@ -24,7 +24,7 @@ module Rager
       when "replicate"
         Rager::MeshGen::Providers::Replicate.new
       else
-        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::Kind::MeshGen, key)
+        raise Rager::Errors::UnknownProviderError.new(Rager::Operation::MeshGen, key)
       end
     end
   end

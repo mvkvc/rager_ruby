@@ -15,7 +15,7 @@ module Rager
           abstract.params(
             prompt: String,
             options: Rager::ImageGen::Options
-          ).returns(Rager::Types::ImageGenValue)
+          ).returns(Rager::Types::ImageGenOutput)
         end
         def image_gen(prompt, options)
         end
