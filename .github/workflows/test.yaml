@@ -3,6 +3,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - ".github/workflows/test.yaml"
+      - "lib/**"
+      - "test/**"
+      - "Gemfile"
+      - "Gemfile.lock"
+      - "rager.gemspec"
 
 jobs:
   test:
